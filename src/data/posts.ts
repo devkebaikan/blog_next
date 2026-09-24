@@ -1659,74 +1659,88 @@ export async function getPostsGallery() {
     },
   ]
 }
-export async function getAllPosts() {
-  const posts = await Promise.all([getPostsDefault(), getPostsVideo(), getPostsAudio(), getPostsGallery()])
+import { fetchBlogBySlug, fetchBlogs } from '@/services/blogService'
+import { transformApiBlogToPost } from '@/utils/blogMapper'
 
-  // random shuffle
+export async function getAllPosts() {
+  try {
+    const apiBlogs = await fetchBlogs({ limit: 50, is_active: true })
+    if (apiBlogs && apiBlogs.length > 0) {
+      return apiBlogs.map(transformApiBlogToPost)
+    }
+  } catch (error) {
+    console.error('Error fetching blogs in getAllPosts:', error)
+  }
+
+  const posts = await Promise.all([getPostsDefault(), getPostsVideo(), getPostsAudio(), getPostsGallery()])
   return posts.flat().sort(() => Math.random() - 0.5)
 }
 
 export async function getPostByHandle(handle: string) {
+  try {
+    const apiBlog = await fetchBlogBySlug(handle)
+    if (apiBlog) {
+      const transformed = transformApiBlogToPost(apiBlog)
+      return {
+        ...transformed,
+        galleryImgs: _demo_post_image_urls.slice(0, 4),
+        videoUrl: 'https://www.youtube.com/watch?v=JcDBFAm9PPI',
+        audioUrl: 'https://files.booliitheme.com/wp-content/uploads/2025/06/paudio3.mp3',
+        tags: [
+          {
+            id: 'tag-1',
+            name: 'Kebaikan',
+            handle: 'kebaikan',
+            color: 'indigo',
+          },
+          {
+            id: 'tag-2',
+            name: 'Sedekah',
+            handle: 'sedekah',
+            color: 'emerald',
+          },
+        ],
+      }
+    }
+  } catch (error) {
+    console.error(`Error fetching post by handle ${handle}:`, error)
+  }
+
   const posts = await getAllPosts()
   let post = posts.find((post) => post.handle === handle) as TPost
   if (!post) {
-    // only for demo purposes, if the post is not found, return the first post
     console.warn(`Post with handle "${handle}" not found. Returning the first post as a fallback.`)
     post = posts[0]
   }
 
   return {
     ...post,
-    // for demo purposes
     galleryImgs: [...(post.galleryImgs || []), ..._demo_post_image_urls],
-    // for demo purposes
     videoUrl: post.videoUrl || 'https://www.youtube.com/watch?v=JcDBFAm9PPI',
-    // for demo purposes
     audioUrl: post.audioUrl || 'https://files.booliitheme.com/wp-content/uploads/2025/06/paudio3.mp3',
     content:
+      (post as any).content ||
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
     author: {
       ...post.author,
       description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        'Penulis dan kontributor inspirasi kebaikan Beramalbersama.',
     },
     tags: [
-      // for demo purposes
       {
         id: 'tag-1',
-        name: 'Technology',
-        handle: 'technology',
-        color: 'blue',
+        name: 'Kebaikan',
+        handle: 'kebaikan',
+        color: 'indigo',
       },
       {
         id: 'tag-2',
-        name: 'Travel',
-        handle: 'travel',
-        color: 'blue',
-      },
-      {
-        id: 'tag-3',
-        name: 'Food',
-        handle: 'food',
-        color: 'blue',
-      },
-      {
-        id: 'tag-4',
-        name: 'Health',
-        handle: 'health',
-        color: 'blue',
+        name: 'Sedekah',
+        handle: 'sedekah',
+        color: 'emerald',
       },
     ],
-    categories: [
-      ...(post.categories || []),
-      // for demo purposes
-      {
-        id: 'category-typography',
-        name: 'Typography',
-        handle: 'typography',
-        color: 'sky',
-      },
-    ],
+    categories: post.categories || [],
   }
 }
 
@@ -1796,6 +1810,7 @@ export type TPost = Awaited<ReturnType<typeof getAllPosts>>[number] & {
   audioUrl?: string
   videoUrl?: string
   galleryImgs?: string[]
+  content?: string
 }
 export type TPostDetail = Awaited<ReturnType<typeof getPostByHandle>>
 export type TComment = Awaited<ReturnType<typeof getCommentsByPostId>>[number]

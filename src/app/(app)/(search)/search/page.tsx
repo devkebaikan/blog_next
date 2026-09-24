@@ -186,7 +186,7 @@ const PageSearch = async ({
         {renderLoopItems()}
 
         {/* PAGINATION */}
-        <PaginationWrapper className="mt-20" />
+        <PaginationWrapper className="mt-20" totalPages={Math.max(1, Math.ceil(totalResults / 12))} />
       </div>
     </div>
   )

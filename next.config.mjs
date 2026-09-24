@@ -18,6 +18,16 @@ const nextConfig = {
         hostname: 'images.pexels.com',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'cdn.beramalbersama.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'beramalbersama.com',
+        pathname: '/**',
+      },
     ],
   },
 }

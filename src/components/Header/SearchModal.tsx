@@ -160,7 +160,8 @@ const SearchModal: FC<Props> = ({ type = 'type1' }) => {
             className="mx-auto w-full max-w-2xl transform divide-y divide-gray-100 self-end overflow-hidden bg-white shadow-2xl ring-1 ring-black/5 transition duration-300 ease-out data-closed:translate-y-10 data-closed:opacity-0 sm:self-start sm:rounded-xl dark:divide-gray-700 dark:bg-neutral-800 dark:ring-white/10"
           >
             <Combobox
-              onChange={(item: Option | TPost) => {
+              onChange={(item: Option | TPost | null) => {
+                if (!item) return
                 if ('uri' in item) {
                   if (item.type === 'recommended_searches') {
                     router.push(item.uri)

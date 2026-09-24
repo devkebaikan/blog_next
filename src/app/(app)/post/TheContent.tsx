@@ -1,10 +1,16 @@
 import Image from 'next/image'
 
 const TheContent = ({ content }: { content: string }) => {
-  // for your content
-  // return <div dangerouslySetInnerHTML={{ __html: content }} />
+  if (content && content.trim().length > 0) {
+    return (
+      <div
+        className="entry-content leading-relaxed space-y-4 text-neutral-800 dark:text-neutral-200 [&_p]:mb-4 [&_h1]:text-3xl [&_h1]:font-bold [&_h1]:mt-6 [&_h1]:mb-3 [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:mt-6 [&_h2]:mb-3 [&_h3]:text-xl [&_h3]:font-semibold [&_h3]:mt-4 [&_h3]:mb-2 [&_ul]:list-disc [&_ul]:ps-6 [&_ul]:space-y-1 [&_ol]:list-decimal [&_ol]:ps-6 [&_ol]:space-y-1 [&_img]:rounded-2xl [&_img]:my-6 [&_img]:max-w-full [&_img]:h-auto [&_blockquote]:border-s-4 [&_blockquote]:border-primary-500 [&_blockquote]:ps-4 [&_blockquote]:italic [&_blockquote]:my-4"
+        dangerouslySetInnerHTML={{ __html: content }}
+      />
+    )
+  }
 
-  // this for demo purpose.
+  // fallback demo content
   return (
     <>
       {/* THIS IS THE DEMP CONTENT - YOU CAN USE MARKDOWN, JSON ...*/}

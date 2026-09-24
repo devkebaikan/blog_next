@@ -1,5 +1,5 @@
 import { TAuthor } from '@/data/authors'
-import { TCategory } from '@/data/categories'
+import { TCategory, TTag } from '@/data/categories'
 import { TPost } from '@/data/posts'
 import HeadingWithSub, { HeadingWithSubProps } from '@/shared/Heading'
 import clsx from 'clsx'
@@ -25,7 +25,7 @@ interface Props extends Pick<HeadingWithSubProps, 'subHeading' | 'dimHeading'> {
   postCardName?: 'card3' | 'card4' | 'card7' | 'card9' | 'card10' | 'card11' | 'card14'
   widgetCategories?: TCategory[]
   widgetAuthors?: TAuthor[]
-  widgetTags?: TCategory[]
+  widgetTags?: TTag[]
   widgetPosts?: TPost[]
 }
 

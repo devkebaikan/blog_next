@@ -112,7 +112,7 @@ const SingleContentContainer: FC<Props> = ({ post, comments, className }) => {
               {author.name}
             </Link>
             <p className="text-sm/relaxed dark:text-neutral-300">
-              {author.description}
+              {(author as any)?.description || 'Penulis dan kontributor inspirasi kebaikan Beramalbersama.'}
               <Link className="ms-1 underline" href={`/author/${author.handle}`}>
                 Read more
               </Link>

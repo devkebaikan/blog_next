@@ -44,7 +44,7 @@ const PageHeader = ({
           {/* AVATAR */}
           <Avatar
             alt={category.name || 'Avatar'}
-            src={thumbnail.src}
+            src={thumbnail?.src || 'https://images.unsplash.com/photo-1534445867742-43195f401b6c?q=80&w=1200&auto=format&fit=crop'}
             square
             width={144}
             height={144}

@@ -16,25 +16,45 @@ interface Props {
   className?: string
 }
 
-function PaginationComponent({ totalPages = 10, className }: Props) {
+function PaginationComponent({ totalPages = 1, className }: Props) {
   const pathname = usePathname()
   const searchParams = useSearchParams()
 
-  // Get a new searchParams string by merging the current
-  // searchParams with a provided key/value pair
   const createQueryString = useCallback(
     (name: string, value: string) => {
       const params = new URLSearchParams(searchParams.toString())
       params.set(name, value)
-
       return params.toString()
     },
     [searchParams]
   )
 
-  // const currentPage = Number(searchParams.get('page')) || 1
-  // for demo purpose, we set currentPage to 2
-  const currentPage = 2
+  const currentPage = Math.max(1, Number(searchParams.get('page')) || 1)
+
+  if (totalPages <= 1) {
+    return null
+  }
+
+  // Generate page numbers to show
+  const getPages = () => {
+    const pages: (number | 'gap')[] = []
+    if (totalPages <= 5) {
+      for (let i = 1; i <= totalPages; i++) pages.push(i)
+    } else {
+      pages.push(1)
+      if (currentPage > 3) pages.push('gap')
+      
+      const start = Math.max(2, currentPage - 1)
+      const end = Math.min(totalPages - 1, currentPage + 1)
+      for (let i = start; i <= end; i++) {
+        if (!pages.includes(i)) pages.push(i)
+      }
+
+      if (currentPage < totalPages - 2) pages.push('gap')
+      if (!pages.includes(totalPages)) pages.push(totalPages)
+    }
+    return pages
+  }
 
   return (
     <Pagination className={className}>
@@ -42,14 +62,19 @@ function PaginationComponent({ totalPages = 10, className }: Props) {
         href={currentPage > 1 ? pathname + '?' + createQueryString('page', (currentPage - 1).toString()) : null}
       />
       <PaginationList>
-        <PaginationPage href={pathname + '?' + createQueryString('page', '1')}>1</PaginationPage>
-        <PaginationPage current href={pathname + '?' + createQueryString('page', '2')}>
-          2
-        </PaginationPage>
-        <PaginationPage href={pathname + '?' + createQueryString('page', '3')}>3</PaginationPage>
-        <PaginationGap />
-        <PaginationPage href={pathname + '?' + createQueryString('page', '15')}>15</PaginationPage>
-        <PaginationPage href={pathname + '?' + createQueryString('page', '16')}>16</PaginationPage>
+        {getPages().map((page, idx) =>
+          page === 'gap' ? (
+            <PaginationGap key={`gap-${idx}`} />
+          ) : (
+            <PaginationPage
+              key={page}
+              current={page === currentPage}
+              href={pathname + '?' + createQueryString('page', page.toString())}
+            >
+              {page}
+            </PaginationPage>
+          )
+        )}
       </PaginationList>
       <PaginationNext
         href={
