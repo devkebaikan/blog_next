@@ -1,15 +1,15 @@
 import { getNavigation } from '@/data/navigation'
 import { getAllPosts } from '@/data/posts'
-import { Button } from '@/shared/Button'
 import Logo from '@/shared/Logo'
-import { PlusIcon } from '@heroicons/react/24/outline'
 import clsx from 'clsx'
 import { FC } from 'react'
-import AvatarDropdown from './AvatarDropdown'
+// import AvatarDropdown from './AvatarDropdown'
 import HamburgerBtnMenu from './HamburgerBtnMenu'
 import Navigation from './Navigation/Navigation'
-import NotifyDropdown from './NotifyDropdown'
 import SearchModal from './SearchModal'
+import { Idea01Icon } from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
+import SwitchDarkMode2 from '@/shared/SwitchDarkMode2'
 
 interface Props {
   bottomBorder?: boolean
@@ -43,14 +43,18 @@ const Header2: FC<Props> = async ({ bottomBorder, className }) => {
         </div>
 
         <div className="flex flex-1 items-center justify-end gap-x-0.5">
-          <div className="hidden sm:block">
-            <Button className="h-10 px-3!" href={'/submission'} plain>
-              <PlusIcon className="size-5!" />
-              Create
-            </Button>
-          </div>
-          <NotifyDropdown className="me-3" />
-          <AvatarDropdown />
+          
+          {/* <NotifyDropdown className="me-3" /> */}
+          <div className="focus-visible:ring-opacity-50 -m-3 hidden md:flex items-center justify-between rounded-lg p-2 hover:bg-neutral-100 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 dark:hover:bg-neutral-700">
+              <div className="flex items-center">
+                <div className="flex flex-shrink-0 items-center justify-center text-neutral-500 dark:text-neutral-300">
+                  <HugeiconsIcon icon={Idea01Icon} size={24} strokeWidth={1.5} />
+                </div>
+                <p className="mx-4 text-sm font-medium">Dark theme</p>
+              </div>
+              <SwitchDarkMode2/>
+            </div>
+          {/* <AvatarDropdown /> */}
           <div className="ms-2 flex lg:hidden">
             <HamburgerBtnMenu />
           </div>

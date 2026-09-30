@@ -1,7 +1,7 @@
-import SectionAds from '@/components/SectionAds'
-import SectionBecomeAnAuthor from '@/components/SectionBecomeAnAuthor'
+// import SectionAds from '@/components/SectionAds'
+// import SectionBecomeAnAuthor from '@/components/SectionBecomeAnAuthor'
 import SectionMagazine10 from '@/components/SectionMagazine10'
-import SectionMagazine11 from '@/components/SectionMagazine11'
+// import SectionMagazine11 from '@/components/SectionMagazine11'
 import SectionMagazine2 from '@/components/SectionMagazine2'
 import SectionMagazine9 from '@/components/SectionMagazine9'
 import SectionPostsWithWidgets from '@/components/SectionPostsWithWidgets'
@@ -50,7 +50,7 @@ const Page = async () => {
         subHeading="Eksplorasi artikel berdasarkan kategori favorit"
       /> */}
 
-      <SectionBecomeAnAuthor />
+      {/* <SectionBecomeAnAuthor /> */}
 
       <SectionPostsWithWidgets
         heading="Kabar Terbaru"
@@ -58,7 +58,7 @@ const Page = async () => {
         posts={posts.slice(0, 8)}
         postCardName="card4"
         gridClass="sm:grid-cols-2"
-        widgetAuthors={authors.slice(0, 4)}
+        // widgetAuthors={authors.slice(0, 4)}
         widgetCategories={categories.slice(0, 7)}
         widgetTags={tags.slice(0, 6)}
         widgetPosts={posts.slice(0, 4)}

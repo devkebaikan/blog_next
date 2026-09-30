@@ -4,12 +4,16 @@ import type { AxiosInstance } from "axios";
 const isServer = typeof window === "undefined";
 
 const BASE_URL = (
-  isServer
-    ? (process.env.INTERNAL_API_URL ?? process.env.NEXT_PUBLIC_API_URL ?? "")
-    : (process.env.NEXT_PUBLIC_API_URL ?? "")
+  process.env.NEXT_PUBLIC_API_URL ??
+  process.env.PUBLIC_API_URL 
 ) as string;
 
-
+// Client Key support untuk server-side dan client-side
+export const CLIENT_KEY = (
+  process.env.NEXT_PUBLIC_CLIENT_KEY ??
+  process.env.PUBLIC_CLIENT_KEY ??
+  process.env.CLIENT_KEY
+) as string;
 
 function addErrorInterceptor(instance: AxiosInstance): AxiosInstance {
   instance.interceptors.response.use(
@@ -17,7 +21,13 @@ function addErrorInterceptor(instance: AxiosInstance): AxiosInstance {
     (err) => {
       const message =
         err.response?.data?.message ?? err.message ?? "Terjadi kesalahan";
-      return Promise.reject(new Error(message));
+      const error = new Error(message) as Error & {
+        status?: number;
+        response?: any;
+      };
+      if (err.response?.status) error.status = err.response.status;
+      error.response = err.response;
+      return Promise.reject(error);
     },
   );
   return instance;
@@ -28,7 +38,10 @@ export const publicApi = addErrorInterceptor(
   axios.create({
     baseURL: BASE_URL,
     timeout: 10_000,
-    headers: { Accept: "application/json" },
+    headers: {
+      Accept: "application/json",
+      ...(CLIENT_KEY ? { "X-Client-Key": CLIENT_KEY } : {}),
+    },
   }),
 );
 
@@ -41,6 +54,7 @@ export function serverApi(token: string): AxiosInstance {
       headers: {
         Accept: "application/json",
         Authorization: `Bearer ${token}`,
+        ...(CLIENT_KEY ? { "X-Client-Key": CLIENT_KEY } : {}),
       },
     }),
   );
@@ -53,7 +67,7 @@ export function useApi(): AxiosInstance {
   if (_instance) return _instance;
 
   _instance = axios.create({
-    baseURL: BASE_URL,
+    baseURL: "/api",
     timeout: 10_000,
     headers: {
       Accept: "application/json",
@@ -61,11 +75,12 @@ export function useApi(): AxiosInstance {
     },
   });
 
-  // Inject token from cookie on every request
+  // Inject token dari cookie di setiap request
   _instance.interceptors.request.use((config) => {
     const match = document.cookie.match(/(?:^|;\s*)authToken=([^;]+)/);
     const token = match ? decodeURIComponent(match[1]) : null;
     if (token) config.headers.set("Authorization", `Bearer ${token}`);
+
     return config;
   });
 

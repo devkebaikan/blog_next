@@ -122,13 +122,13 @@ const SingleContentContainer: FC<Props> = ({ post, comments, className }) => {
         </div>
 
         {/* COMMENT FORM */}
-        <div id="comments" className="mx-auto max-w-(--breakpoint-md) scroll-mt-20 pt-5">
+        {/* <div id="comments" className="mx-auto max-w-(--breakpoint-md) scroll-mt-20 pt-5">
           <h3 className="text-xl font-semibold text-neutral-800 dark:text-neutral-200">Responses ({commentCount})</h3>
           <SingleCommentForm />
-        </div>
+        </div> */}
 
         {/* COMMENTS LIST */}
-        <div className="mx-auto max-w-(--breakpoint-md)">
+        {/* <div className="mx-auto max-w-(--breakpoint-md)">
           <ul className="single-comment-lists space-y-5">
             {comments.map((comment) => (
               <CommentCard key={comment.id} comment={comment} />
@@ -136,11 +136,11 @@ const SingleContentContainer: FC<Props> = ({ post, comments, className }) => {
             <ButtonPrimary className="mt-10 w-full">View all {commentCount} comments</ButtonPrimary>
           </ul>
           <div ref={endedAnchorRef}></div>
-        </div>
+        </div> */}
       </div>
 
       {/* LIKE AND COMMENT STICKY */}
-      <div className={`sticky bottom-8 z-11 mt-8 justify-center ${showLikeAndCommentSticky ? 'flex' : 'hidden'}`}>
+      {/* <div className={`sticky bottom-8 z-11 mt-8 justify-center ${showLikeAndCommentSticky ? 'flex' : 'hidden'}`}>
         <div className="flex items-center justify-center gap-x-2 rounded-full bg-white p-1.5 text-xs shadow-lg ring-1 ring-black/5 dark:bg-neutral-800 dark:ring-white/20">
           <PostCardLikeBtn likeCount={likeCount} liked={liked} />
           <div className="h-4 border-s border-neutral-200 dark:border-neutral-700"></div>
@@ -169,7 +169,7 @@ const SingleContentContainer: FC<Props> = ({ post, comments, className }) => {
             %
           </button>
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }

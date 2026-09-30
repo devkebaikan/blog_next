@@ -1,16 +1,41 @@
 import clsx from 'clsx'
+import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
 interface Props extends React.SVGProps<SVGSVGElement> {
   className?: string
   size?: string
+  variant?: 'short-color' | 'long-color' | 'short-white' | 'long-white' 
 }
 
-const Logo: React.FC<Props> = ({ className, size = 'size-12 sm:size-14', ...props }) => {
+const Logo: React.FC<Props> = ({ className, size = 'size-12 sm:size-14', variant = 'short-color', ...props }) => {
+
+  const logoImg = {
+    'short-color': '/images/logo/logo-short-color.png',
+    'long-color': '/images/logo/logo-long-color.png',
+    'short-white': '/images/logo/logo-short-white.png',
+    'long-white': '/images/logo/logo-long-white.png'
+  }
+
+  const getLogoImg = () => {
+    switch (variant) {
+      case 'short-color':
+        return '/images/logo/logo-short-color.png'
+      case 'long-color':
+        return '/images/logo/logo-long-color.png'
+      case 'short-white':
+        return '/images/logo/logo-short-white.png'
+      case 'long-white':
+        return '/images/logo/logo-long-white.png'
+      default:
+        return '/images/logo/logo-short-color.png'
+    }
+  }
+  
   return (
-    <Link href="/" className={clsx('inline-block shrink-0 text-primary-600 dark:text-primary-500', className, size)}>
-      <svg width="100%" height="100%" viewBox="0 0 59 41" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <Link href="/" className={clsx('inline-block shrink-0 text-primary-600 p-2 dark:text-primary-500', className, size)}>
+      {/* <svg width="100%" height="100%" viewBox="0 0 59 41" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
         <path
           d="M33.5224 9.69455C34.547 8.66632 35.1818 7.24829 35.1818 5.68181C35.1818 2.54402 32.6378 0 29.5 0C27.516 0 25.7721 1.01857 24.7559 2.55971C24.4868 2.83004 1.8706 30.7044 1.65941 31.0255C0.633591 32.0525 0 33.4705 0 35.037C0 38.1748 2.54281 40.7188 5.6806 40.7188C7.66464 40.7188 9.40853 39.7002 10.4247 38.1591C10.695 37.8888 33.3112 10.0144 33.5224 9.69455Z"
           fill="currentColor"
@@ -27,7 +52,8 @@ const Logo: React.FC<Props> = ({ className, size = 'size-12 sm:size-14', ...prop
           d="M11.3624 5.68181C11.3624 8.81959 8.81838 11.3636 5.6806 11.3636C2.54281 11.3636 0 8.81959 0 5.68181C0 2.54402 2.54281 0 5.6806 0C8.81838 0 11.3624 2.54402 11.3624 5.68181Z"
           fill="currentColor"
         />
-      </svg>
+      </svg> */}
+      <Image src={getLogoImg()} alt="Logo" width={100} height={100} />
     </Link>
   )
 }

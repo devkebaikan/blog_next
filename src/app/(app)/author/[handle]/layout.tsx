@@ -28,13 +28,13 @@ const Layout: React.FC<Props> = async ({ children }) => {
           </div>
         </div>
 
-        <SectionSliderNewAuthors
+        {/* <SectionSliderNewAuthors
           heading="Top elite authors"
           subHeading="Discover our elite writers"
           authors={authors.slice(0, 10)}
-        />
+        /> */}
 
-        <SectionSubscribe2 />
+        {/* <SectionSubscribe2 /> */}
       </div>
     </ApplicationLayout>
   )

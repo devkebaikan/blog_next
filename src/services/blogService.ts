@@ -37,8 +37,25 @@ export interface ApiResponse<T> {
 
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_URL ||
-  process.env.PUBLIC_API_URL ||
-  'https://fapi.beramalbersama.com/api/v1'
+  process.env.PUBLIC_API_URL
+
+const CLIENT_KEY =
+  process.env.NEXT_PUBLIC_CLIENT_KEY ||
+  process.env.PUBLIC_CLIENT_KEY ||
+  process.env.CLIENT_KEY
+
+const getHeaders = (customHeaders?: HeadersInit): HeadersInit => {
+  const headers: Record<string, string> = {
+    Accept: 'application/json',
+  }
+  if (CLIENT_KEY) {
+    headers['x-client-key'] = CLIENT_KEY
+  }
+  return {
+    ...headers,
+    ...customHeaders,
+  }
+}
 
 const DEFAULT_CATEGORIES: ApiCategoryItem[] = [
   { id: 1, nama: 'Inspirasi Kebaikan' },
@@ -88,9 +105,7 @@ export async function fetchBlogs(params: GetBlogsParams = {}): Promise<ApiBlogIt
 
     const res = await fetch(url.toString(), {
       next: { revalidate: 60 },
-      headers: {
-        Accept: 'application/json',
-      },
+      headers: getHeaders(),
     })
 
     if (!res.ok) {
@@ -110,9 +125,7 @@ export async function fetchBlogBySlug(slug: string): Promise<ApiBlogItem | null>
   try {
     const res = await fetch(`${API_BASE_URL}/blogs/${encodeURIComponent(slug)}`, {
       next: { revalidate: 60 },
-      headers: {
-        Accept: 'application/json',
-      },
+      headers: getHeaders(),
     })
 
     if (!res.ok) {
@@ -139,7 +152,7 @@ export async function fetchCategories(params?: {
   page?: number
 }): Promise<ApiCategoryItem[]> {
   try {
-    const url = new URL(`${API_BASE_URL}/blogs/kategori`)
+    const url = new URL(`/api/blogs/kategori`)
     if (params?.search) url.searchParams.set('search', params.search)
     if (params?.mode) url.searchParams.set('mode', params.mode)
     if (params?.limit) url.searchParams.set('limit', String(params.limit))
@@ -147,9 +160,7 @@ export async function fetchCategories(params?: {
 
     const res = await fetch(url.toString(), {
       next: { revalidate: 300 },
-      headers: {
-        Accept: 'application/json',
-      },
+      headers: getHeaders(),
     })
 
     if (res.ok) {
@@ -178,7 +189,7 @@ export async function fetchTags(params?: {
   page?: number
 }): Promise<ApiTagItem[]> {
   try {
-    const url = new URL(`${API_BASE_URL}/blogs/tags`)
+    const url = new URL(`/api/blogs/tags`)
     if (params?.search) url.searchParams.set('search', params.search)
     if (params?.mode) url.searchParams.set('mode', params.mode)
     if (params?.limit) url.searchParams.set('limit', String(params.limit))
@@ -186,9 +197,7 @@ export async function fetchTags(params?: {
 
     const res = await fetch(url.toString(), {
       next: { revalidate: 300 },
-      headers: {
-        Accept: 'application/json',
-      },
+      headers: getHeaders(),
     })
 
     if (res.ok) {
