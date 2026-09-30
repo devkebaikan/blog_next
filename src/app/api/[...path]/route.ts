@@ -24,10 +24,9 @@ const allowedPaths = [
 
 async function handleProxy(
   request: NextRequest,
-  context: { params: Promise<{ path?: string[] }> | { path?: string[] } }
+  context: { params: Promise<{ path: string[] }> }
 ) {
-  const params = await context.params;
-  const pathSegments = params.path ?? [];
+  const { path: pathSegments = [] } = await context.params;
   const path = Array.isArray(pathSegments) ? pathSegments.join("/") : pathSegments;
 
   if (!allowedPaths.some((pattern) => pattern.test(path))) {
