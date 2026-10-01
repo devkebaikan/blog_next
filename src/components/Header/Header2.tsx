@@ -6,7 +6,7 @@ import { FC } from 'react'
 // import AvatarDropdown from './AvatarDropdown'
 import HamburgerBtnMenu from './HamburgerBtnMenu'
 import Navigation from './Navigation/Navigation'
-import SearchModal from './SearchModal'
+// import SearchModal from './SearchModal'
 import { Idea01Icon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import SwitchDarkMode2 from '@/shared/SwitchDarkMode2'
@@ -31,11 +31,7 @@ const Header2: FC<Props> = async ({ bottomBorder, className }) => {
     >
       <div className="container flex h-20 justify-between">
         <div className="flex flex-1 items-center gap-x-4 sm:gap-x-5 lg:gap-x-7">
-          <Logo />
-          <div className="h-8 border-l"></div>
-          <div className="-ms-1.5">
-            <SearchModal type="type1" />
-          </div>
+          <Logo variant='custom' className='h-12 w-auto' />
         </div>
 
         <div className="mx-4 hidden flex-2 justify-center lg:flex">

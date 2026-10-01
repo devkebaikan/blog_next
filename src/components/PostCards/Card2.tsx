@@ -1,14 +1,10 @@
 import { TPost } from '@/data/posts'
-import { Divider } from '@/shared/divider'
 import clsx from 'clsx'
 import Image from 'next/image'
 import Link from 'next/link'
 import { FC } from 'react'
 import CategoryBadgeList from '../CategoryBadgeList'
-import PostCardCommentBtn from '../PostCardCommentBtn'
-import PostCardLikeBtn from '../PostCardLikeBtn'
 import PostCardMeta from '../PostCardMeta/PostCardMeta'
-import PostCardSaveBtn from '../PostCardSaveBtn'
 import PostTypeFeaturedIcon from '../PostTypeFeaturedIcon'
 
 interface Props {
@@ -18,19 +14,7 @@ interface Props {
 }
 
 const Card2: FC<Props> = ({ className, size = 'normal', post }) => {
-  const {
-    title,
-    featuredImage,
-    handle,
-    readingTime,
-    categories,
-    postType,
-    likeCount,
-    liked,
-    commentCount,
-    bookmarked,
-    excerpt,
-  } = post
+  const { title, featuredImage, handle, categories, postType, excerpt } = post
 
   return (
     <div className={clsx('group post-card-2 relative flex flex-col', className)}>
@@ -70,14 +54,6 @@ const Card2: FC<Props> = ({ className, size = 'normal', post }) => {
             </Link>
           </h2>
           <p className="block text-sm/6 text-neutral-600 dark:text-neutral-400">{excerpt}</p>
-        </div>
-
-        <Divider className="my-5" />
-
-        <div className="relative flex flex-wrap gap-x-2 gap-y-1">
-          <PostCardLikeBtn likeCount={likeCount} liked={liked} />
-          <PostCardCommentBtn commentCount={commentCount} handle={handle} />
-          <PostCardSaveBtn className="ms-auto" readingTime={readingTime} bookmarked={bookmarked} />
         </div>
       </div>
     </div>

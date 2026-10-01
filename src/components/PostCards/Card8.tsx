@@ -5,9 +5,6 @@ import Link from 'next/link'
 import { FC } from 'react'
 import CategoryBadgeList from '../CategoryBadgeList'
 import LocalDate from '../LocalDate'
-import PostCardCommentBtn from '../PostCardCommentBtn'
-import PostCardLikeBtn from '../PostCardLikeBtn'
-import PostCardSaveBtn from '../PostCardSaveBtn'
 
 interface Props {
   className?: string
@@ -21,11 +18,6 @@ const Card8: FC<Props> = ({ className, post, ratio = 'aspect-3/4 sm:aspect-2/1' 
     handle,
     featuredImage,
     categories,
-    postType,
-    likeCount,
-    liked,
-    commentCount,
-    bookmarked,
     author,
     date,
     readingTime,
@@ -61,12 +53,6 @@ const Card8: FC<Props> = ({ className, post, ratio = 'aspect-3/4 sm:aspect-2/1' 
           href={`/post/${handle}`}
           className="absolute inset-x-0 top-1/3 bottom-0 bg-linear-to-t from-black opacity-60 transition-opacity duration-300 group-hover:top-0 group-hover:opacity-70"
         />
-
-        <div className="absolute inset-x-0 top-0 z-10 flex flex-wrap gap-x-2 gap-y-1 p-4 sm:px-5">
-          <PostCardLikeBtn likeCount={likeCount} liked={liked} />
-          <PostCardCommentBtn commentCount={commentCount} handle={handle} />
-          <PostCardSaveBtn className="ms-auto" bookmarked={bookmarked} />
-        </div>
       </div>
 
       <div className="absolute inset-x-0 bottom-0 flex flex-col p-4 sm:p-6">

@@ -1,100 +1,214 @@
-import { CustomLink } from '@/data/types'
-import Logo from '@/shared/Logo'
-import SocialsList1 from '@/shared/SocialsList1'
+import Image from 'next/image'
+import Link from 'next/link'
 import React from 'react'
 
-export interface WidgetFooterMenu {
-  id: string
-  title: string
-  menus: CustomLink[]
-}
+const quickLinks = [
+  { name: 'Tentang kami', href: '/tentang' },
+  // { name: "Download", href: "/aplikasi" },
+  // { name: "Rekening", href: "/rekening" },
+  // { name: "Menjadi Relawan", href: "/kontak" },
+]
 
-const widgetMenus: WidgetFooterMenu[] = [
+const infoLinks = [
+  { name: 'Cerita', href: '/story' },
+  { name: 'Berita', href: '/event-salur' },
+  { name: 'Laporan', href: '/tentang-salur' },
+  { name: 'Syarat dan ketentuan', href: '/syarat-ketentuan' },
+]
+
+const socialLinks = [
   {
-    id: '5',
-    title: 'Getting started',
-    menus: [
-      { href: '/', label: 'Installation' },
-      { href: '/', label: 'Release Notes' },
-      { href: '/', label: 'Upgrade Guide' },
-      { href: '/', label: 'Browser Support' },
-      { href: '/', label: 'Editor Support' },
-    ],
+    name: 'Facebook',
+    href: 'https://www.facebook.com/beramalbersama/',
+    path: 'M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z',
   },
   {
-    id: '1',
-    title: 'Explore',
-    menus: [
-      { href: '/', label: 'Design features' },
-      { href: '/', label: 'Prototyping' },
-      { href: '/', label: 'Design systems' },
-      { href: '/', label: 'Pricing' },
-      { href: '/', label: 'Customers' },
-    ],
+    name: 'Instagram',
+    href: 'https://www.instagram.com/beramalbersama/',
+    path: 'M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z',
   },
   {
-    id: '2',
-    title: 'Resources',
-    menus: [
-      { href: '/', label: 'Best practices' },
-      { href: '/', label: 'Support' },
-      { href: '/', label: 'Developers' },
-      { href: '/', label: 'Learn design' },
-      { href: '/', label: "What's new" },
-    ],
-  },
-  {
-    id: '4',
-    title: 'Community',
-    menus: [
-      { href: '/', label: 'Discussion Forums' },
-      { href: '/', label: 'Code of Conduct' },
-      { href: '/', label: 'Community Resources' },
-      { href: '/', label: 'Contributing' },
-      { href: '/', label: 'Concurrent Mode' },
-    ],
+    name: 'YouTube',
+    href: 'https://www.youtube.com/channel/UCdo2A0yaJ1p0zEKKpoTe7xA',
+    path: 'M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z',
   },
 ]
 
 const Footer: React.FC = () => {
-  const renderWidgetMenuItem = (menu: WidgetFooterMenu, index: number) => {
-    return (
-      <div key={index} className="text-sm">
-        <h2 className="font-semibold text-neutral-700 dark:text-neutral-200">{menu.title}</h2>
-        <ul className="mt-5 space-y-4">
-          {menu.menus.map((item, index) => (
-            <li key={index}>
-              <a
-                key={index}
-                className="text-neutral-600 hover:text-black dark:text-neutral-300 dark:hover:text-white"
-                href={item.href}
-              >
-                {item.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-    )
-  }
-
   return (
-    <>
-      {/* footer */}
-      <div className="nc-Footer relative border-t border-neutral-200 py-16 lg:py-28 dark:border-neutral-700">
-        <div className="container grid grid-cols-2 gap-x-5 gap-y-10 sm:gap-x-8 md:grid-cols-4 lg:grid-cols-5 lg:gap-x-10">
-          <div className="col-span-2 grid grid-cols-4 gap-5 md:col-span-4 lg:flex lg:flex-col lg:md:col-span-1">
-            <div className="col-span-2 md:col-span-1">
-              <Logo size="size-10" />
-            </div>
-            <div className="col-span-2 flex items-center md:col-span-3">
-              <SocialsList1 />
+    <footer id="contact" className="relative overflow-hidden bg-primary-900 dark:bg-neutral-800 text-white">
+      {/* Top wave decoration */}
+      <div className="absolute top-0 right-0 left-0 h-1 bg-gradient-to-r from-primary-400 via-primary-300 to-primary-400 opacity-40" />
+
+      <div className="container py-14 md:py-18">
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-12">
+          {/* Logo & Description */}
+          <div className="md:col-span-1">
+            <Link href="/" className="mb-5 inline-block">
+              <Image
+                src="/images/logo/logo-long-white.png"
+                alt="Beramalbersama"
+                width={200}
+                height={48}
+                className="h-12 w-auto brightness-200 saturate-0"
+              />
+            </Link>
+            <p className="mb-5 text-sm leading-relaxed text-primary-200/80">
+              <span className="font-semibold text-white">Menggerakkan Kebaikan</span>
+              <br />
+              beramalbersama.com adalah laman infaq sedekah online. Dikelola dan diberdayakan oleh Yayasan Sahabat
+              Beramal Bersama sebagai Mitra Pengelola Zakat Dompet Dhuafa.
+            </p>
+            {/* Social Icons */}
+            <div className="flex items-center gap-3">
+              {socialLinks.map((s) => (
+                <a
+                  key={s.name}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={s.name}
+                  className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 transition-all duration-200 hover:bg-primary-500 hover:text-white"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+                    <path d={s.path} />
+                  </svg>
+                </a>
+              ))}
             </div>
           </div>
-          {widgetMenus.map(renderWidgetMenuItem)}
+
+          {/* Quick Links */}
+          <div className="hidden">
+            <h4 className="font-display mb-4 text-base font-semibold text-white">Tautan Cepat</h4>
+            <ul className="space-y-2.5">
+              {quickLinks.map((link) => (
+                <li key={link.name}>
+                  <Link
+                    href={link.href}
+                    className="group flex items-center gap-2 text-sm text-primary-200/75 transition-colors hover:text-white"
+                  >
+                    <span className="h-1 w-1 rounded-full bg-primary-400 transition-colors group-hover:bg-primary-300" />
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Info Links */}
+          <div className="hidden">
+            <h4 className="font-display mb-4 text-base font-semibold text-white">Sekilas</h4>
+            <ul className="space-y-2.5">
+              {infoLinks.map((link) => (
+                <li key={link.name}>
+                  <Link
+                    href={link.href}
+                    className="group flex items-center gap-2 text-sm text-primary-200/75 transition-colors hover:text-white"
+                  >
+                    <span className="h-1 w-1 rounded-full bg-primary-400 transition-colors group-hover:bg-primary-300" />
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contact */}
+          <div>
+            <h4 className="font-display mb-4 text-base font-semibold text-white">Kontak Kami</h4>
+            <ul className="space-y-4">
+              <li className="flex items-start gap-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="mt-0.5 h-4 w-4 shrink-0 text-primary-300"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                  />
+                </svg>
+                <span className="text-sm leading-snug text-primary-200/75">
+                  Jl. Srikatan No. 14 RT 01 RW 04 Kerten, Kec. Laweyan, Surakarta
+                </span>
+              </li>
+              <li className="flex items-start gap-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="1em"
+                  height="1em"
+                  viewBox="0 0 48 48"
+                  className="mt-0.5 h-4 w-4 shrink-0 text-primary-300"
+                >
+                  <path d="M0 0h48v48H0z" fill="none" />
+                  <path
+                    fill="none"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="mt-0.5 h-4 w-4 shrink-0 text-primary-300"
+                    d="m12.852 21.473l2.859-2.858c1.03-1.031 2.316-2.336 2.187-3.788l-.486-5.488c-.16-1.802-2.03-3.839-3.84-3.839H8.866c-1.843 0-3.581 1.554-3.344 4.31c.155 1.812-.84 11.764 10.032 22.636s20.824 9.877 22.636 10.032c2.756.237 4.31-1.501 4.31-3.344v-4.706c0-1.81-2.037-3.68-3.84-3.84l-5.487-.486c-1.452-.129-2.757 1.156-3.788 2.187l-2.858 2.859c-2.54-1.36-5.208-3.238-7.822-5.853c-2.615-2.614-4.494-5.281-5.853-7.822"
+                  />
+                </svg>
+
+                <a
+                  href="https://api.whatsapp.com/send?phone=6281381111453&text=Salam+beramalbersama"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-primary-200/75 transition-colors hover:text-white"
+                >
+                  0813-8111-1453
+                </a>
+              </li>
+            </ul>
+
+            <p className="mt-5 text-[11px] leading-relaxed text-primary-200/70">
+              Dana yang didonasikan melalui Beramalbersama dimiliki secara penuh dan bukan bersumber dari dana yang
+              tidak halal dan bukan untuk tujuan pencucian uang (money laundry), termasuk terorisme maupun tindak
+              kejahatan lainnya.
+            </p>
+
+            {/* Trust badge */}
+            {/* <div className="mt-6 flex items-center gap-2 bg-white/5 rounded-xl px-3 py-2.5 border border-white/10">
+              <span className="text-lg">🔒</span>
+              <p className="text-xs text-primary-200/80 leading-snug">Donasi aman &<br />terverifikasi</p>
+            </div> */}
+          </div>
+        </div>
+
+        {/* Divider + Copyright */}
+        <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-white/10 pt-6 text-xs text-primary-200/50 md:flex-row">
+          <p>© 2026 Beramalbersama.com — Hak cipta dilindungi.</p>
+          <div className="flex items-center gap-4">
+            <span className="font-medium text-primary-200/60">Ikuti Kami:</span>
+            <div className="flex items-center gap-3">
+              {socialLinks.map((s) => (
+                <a
+                  key={s.name}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary-200/75 transition-colors hover:text-white"
+                >
+                  {s.name}
+                </a>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
-    </>
+    </footer>
   )
 }
 

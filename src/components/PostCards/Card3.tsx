@@ -5,9 +5,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { FC } from 'react'
 import CategoryBadgeList from '../CategoryBadgeList'
-import PostCardCommentBtn from '../PostCardCommentBtn'
-import PostCardLikeBtn from '../PostCardLikeBtn'
-import PostCardSaveBtn from '../PostCardSaveBtn'
 import PostTypeFeaturedIcon from '../PostTypeFeaturedIcon'
 
 interface Props {
@@ -16,19 +13,7 @@ interface Props {
 }
 
 const Card3: FC<Props> = ({ className, post }) => {
-  const {
-    title,
-    handle,
-    readingTime,
-    featuredImage,
-    excerpt,
-    categories,
-    postType,
-    likeCount,
-    liked,
-    commentCount,
-    bookmarked,
-  } = post
+  const { title, handle, featuredImage, excerpt, categories, postType } = post
 
   return (
     <div className={clsx('group post-card-3 flex flex-wrap items-center gap-x-7 gap-y-5 sm:flex-nowrap', className)}>
@@ -43,11 +28,6 @@ const Card3: FC<Props> = ({ className, post }) => {
           <p className="line-clamp-2 text-sm/6 text-neutral-600 dark:text-neutral-400">{excerpt}</p>
 
           <PostCardMeta meta={post} />
-        </div>
-        <div className="relative mt-5 flex flex-wrap gap-x-2 gap-y-1">
-          <PostCardLikeBtn likeCount={likeCount} liked={liked} />
-          <PostCardCommentBtn commentCount={commentCount} handle={handle} />
-          <PostCardSaveBtn className="ms-auto" readingTime={readingTime} bookmarked={bookmarked} />
         </div>
       </div>
 

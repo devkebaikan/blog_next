@@ -6,7 +6,6 @@ import { FC, useState } from 'react'
 import CategoryBadgeList from '../CategoryBadgeList'
 import NcImage from '../NcImage/NcImage'
 import PostCardMeta3 from '../PostCardMeta/PostCardMeta3'
-import PostCardSaveBtn from '../PostCardSaveBtn'
 import PostFeaturedMedia from '../PostFeaturedMedia/PostFeaturedMedia'
 
 interface Props {
@@ -16,7 +15,7 @@ interface Props {
 }
 
 const Card10V3: FC<Props> = ({ className, post, galleryType = 1 }) => {
-  const { title, handle, categories, postType, galleryImgs, author, date, readingTime, bookmarked } = post
+  const { title, handle, categories, postType, galleryImgs, author, date, readingTime } = post
   const [isHover, setIsHover] = useState(false)
 
   const renderGallery2 = () => {
@@ -104,7 +103,6 @@ const Card10V3: FC<Props> = ({ className, post, galleryType = 1 }) => {
 
       <div className="absolute inset-x-3 top-3 flex items-start justify-between space-x-4">
         <CategoryBadgeList categories={categories} />
-        <PostCardSaveBtn bookmarked={bookmarked} />
       </div>
 
       <div className="mt-4 space-y-4 px-4">

@@ -4,10 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { FC } from 'react'
 import CategoryBadgeList from '../CategoryBadgeList'
-import PostCardCommentBtn from '../PostCardCommentBtn'
-import PostCardLikeBtn from '../PostCardLikeBtn'
 import PostCardMeta3 from '../PostCardMeta/PostCardMeta3'
-import PostCardSaveBtn from '../PostCardSaveBtn'
 import PostTypeFeaturedIcon from '../PostTypeFeaturedIcon'
 
 interface Props {
@@ -27,21 +24,12 @@ const Card7: FC<Props> = ({ className, ratio = 'aspect-3/4', post, hoverClass })
     date,
     readingTime,
     postType,
-    likeCount,
-    liked,
-    commentCount,
-    bookmarked,
   } = post
 
   return (
     <div
       className={clsx('group post-card-7 relative flex flex-col overflow-hidden rounded-3xl', hoverClass, className)}
     >
-      <div className="absolute inset-x-0 top-0 z-10 flex flex-wrap items-center gap-x-2 gap-y-1 p-3">
-        <PostCardLikeBtn likeCount={likeCount} liked={liked} />
-        <PostCardCommentBtn commentCount={commentCount} handle={handle} />
-        <PostCardSaveBtn className="ms-auto" bookmarked={bookmarked} />
-      </div>
       <div className={clsx('relative w-full', ratio)}>
         <Link href={`/post/${handle}`} className="absolute inset-0" />
         <Image

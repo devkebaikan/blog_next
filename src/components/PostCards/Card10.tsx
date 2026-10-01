@@ -5,7 +5,6 @@ import clsx from 'clsx'
 import { FC, useState } from 'react'
 import CategoryBadgeList from '../CategoryBadgeList'
 import PostCardMeta2 from '../PostCardMeta/PostCardMeta2'
-import PostCardSaveBtn from '../PostCardSaveBtn'
 import PostFeaturedMedia from '../PostFeaturedMedia/PostFeaturedMedia'
 
 interface Props {
@@ -16,7 +15,7 @@ interface Props {
 
 const Card10: FC<Props> = ({ className, post, ratio = 'aspect-square sm:aspect-11/12' }) => {
   const [isHover, setIsHover] = useState(false)
-  const { categories, bookmarked } = post
+  const { categories } = post
 
   return (
     <div
@@ -29,7 +28,6 @@ const Card10: FC<Props> = ({ className, post, ratio = 'aspect-square sm:aspect-1
       </div>
       <div className="absolute inset-x-3 top-3 z-10 flex items-start justify-between gap-x-4">
         <CategoryBadgeList categories={categories} />
-        <PostCardSaveBtn bookmarked={bookmarked} />
       </div>
 
       <PostCardMeta2 meta={post} className="mt-4" />

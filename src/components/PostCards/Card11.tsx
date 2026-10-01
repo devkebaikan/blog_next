@@ -5,10 +5,7 @@ import clsx from 'clsx'
 import Link from 'next/link'
 import { FC, useState } from 'react'
 import CategoryBadgeList from '../CategoryBadgeList'
-import PostCardCommentBtn from '../PostCardCommentBtn'
-import PostCardLikeBtn from '../PostCardLikeBtn'
 import PostCardMeta from '../PostCardMeta/PostCardMeta'
-import PostCardSaveBtn from '../PostCardSaveBtn'
 import PostFeaturedMedia from '../PostFeaturedMedia/PostFeaturedMedia'
 
 interface Props {
@@ -19,7 +16,7 @@ interface Props {
 }
 
 const Card11: FC<Props> = ({ className, post, hiddenAuthor = false, ratio = 'aspect-4/3' }) => {
-  const { title, handle, categories, date, likeCount, liked, commentCount, readingTime, bookmarked } = post
+  const { title, handle, categories, date } = post
 
   const [isHover, setIsHover] = useState(false)
 
@@ -39,16 +36,10 @@ const Card11: FC<Props> = ({ className, post, hiddenAuthor = false, ratio = 'asp
       <div className="flex grow flex-col gap-y-3 rounded-b-3xl border p-4">
         {!hiddenAuthor ? <PostCardMeta meta={post} /> : <span className="text-xs text-neutral-500">{date}</span>}
         <h3 className="nc-card-title block text-base font-semibold text-neutral-900 dark:text-neutral-100">
-          <Link href={`/post/${post.handle}`} className="line-clamp-2" title={title}>
+          <Link href={`/post/${handle}`} className="line-clamp-2" title={title}>
             {title}
           </Link>
         </h3>
-
-        <div className="mt-auto flex flex-wrap gap-x-2 gap-y-1">
-          <PostCardLikeBtn likeCount={likeCount} liked={liked} />
-          <PostCardCommentBtn commentCount={commentCount} handle={handle} />
-          <PostCardSaveBtn className="ms-auto" readingTime={readingTime} bookmarked={bookmarked} />
-        </div>
       </div>
     </div>
   )

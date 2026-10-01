@@ -5,10 +5,7 @@ import clsx from 'clsx'
 import Link from 'next/link'
 import { FC } from 'react'
 import CategoryBadgeList from '../CategoryBadgeList'
-import PostCardCommentBtn from '../PostCardCommentBtn'
-import PostCardLikeBtn from '../PostCardLikeBtn'
 import PostCardMeta3 from '../PostCardMeta/PostCardMeta3'
-import PostCardSaveBtn from '../PostCardSaveBtn'
 import PostTypeFeaturedIcon from '../PostTypeFeaturedIcon'
 
 interface Props {
@@ -26,11 +23,6 @@ const CardLarge1: FC<Props> = ({ className, post, onClickNext, onClickPrev }) =>
     handle,
     categories,
     author,
-    readingTime,
-    likeCount,
-    commentCount,
-    liked,
-    bookmarked,
   } = post
   return (
     <div
@@ -50,17 +42,6 @@ const CardLarge1: FC<Props> = ({ className, post, onClickNext, onClickPrev }) =>
           </h2>
 
           <PostCardMeta3 className="relative" author={author} date={date} />
-
-          <div className="flex flex-wrap gap-x-2 gap-y-1">
-            <PostCardLikeBtn likeCount={likeCount} liked={liked} />
-            <PostCardCommentBtn commentCount={commentCount} handle={handle} />
-            <PostCardSaveBtn
-              className="ms-auto"
-              bookmarkClass="size-8 bg-neutral-50/30 hover:bg-neutral-50/50 dark:bg-neutral-800/30 dark:hover:bg-neutral-800/50"
-              readingTime={readingTime}
-              bookmarked={bookmarked}
-            />
-          </div>
         </div>
         <div className="p-4 sm:px-10 sm:pt-8">
           <NextPrev btnClassName="size-11" onClickNext={onClickNext} onClickPrev={onClickPrev} />
