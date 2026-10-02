@@ -1,15 +1,15 @@
 'use client'
 
 import { TNavigationItem } from '@/data/navigation'
-import ButtonPrimary from '@/shared/ButtonPrimary'
+// import ButtonPrimary from '@/shared/ButtonPrimary'
 import { Divider } from '@/shared/divider'
 import { Link } from '@/shared/link'
 import SocialsList from '@/shared/SocialsList'
 import SwitchDarkMode from '@/shared/SwitchDarkMode'
 import { Disclosure, DisclosureButton, DisclosurePanel, useClose } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/24/solid'
-import { Search01Icon } from '@hugeicons/core-free-icons'
-import { HugeiconsIcon } from '@hugeicons/react'
+// import { Search01Icon } from '@hugeicons/core-free-icons'
+// import { HugeiconsIcon } from '@hugeicons/react'
 import clsx from 'clsx'
 import { redirect } from 'next/navigation'
 import React from 'react'
@@ -88,14 +88,6 @@ const SidebarNavigation: React.FC<Props> = ({ data }) => {
           redirect('/search')
         }}
       >
-        <div className="flex h-full items-center gap-x-2.5 rounded-xl bg-neutral-50 px-3 py-3 dark:bg-neutral-800">
-          <HugeiconsIcon icon={Search01Icon} size={24} color="currentColor" strokeWidth={1.5} />
-          <input
-            type="search"
-            placeholder="Type and press enter"
-            className="w-full border-none bg-transparent focus:ring-0 focus:outline-hidden sm:text-sm"
-          />
-        </div>
         <input type="submit" hidden value="" />
       </form>
     )
@@ -103,9 +95,6 @@ const SidebarNavigation: React.FC<Props> = ({ data }) => {
 
   return (
     <div>
-      <p className="text-sm/relaxed">
-        Discover the most outstanding articles on all topics of life. Write your stories and share them
-      </p>
       <div className="mt-5 flex items-center justify-between">
         <SocialsList />
       </div>
@@ -115,14 +104,6 @@ const SidebarNavigation: React.FC<Props> = ({ data }) => {
 
       {/* FOR OUR DEMO */}
       <div className="flex items-center justify-between gap-x-2.5 py-6">
-        <ButtonPrimary
-          href="https://themeforest.net/item/ncmaz-blog-news-magazine-nextjs-template/44412092"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Buy this template
-        </ButtonPrimary>
-
         <SwitchDarkMode />
       </div>
     </div>
