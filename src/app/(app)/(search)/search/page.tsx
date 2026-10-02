@@ -32,7 +32,7 @@ const filterTabs = [
   },
   { name: 'Categories', value: 'categories', icon: Folder02Icon },
   { name: 'Tags', value: 'tags', icon: Tag02Icon },
-  { name: 'Authors', value: 'authors', icon: UserListIcon },
+  // { name: 'Authors', value: 'authors', icon: UserListIcon },
 ]
 
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>

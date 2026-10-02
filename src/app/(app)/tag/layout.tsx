@@ -17,17 +17,17 @@ const Layout: React.FC<Props> = async ({ children }) => {
       {children}
 
       <div className="container space-y-20 py-20 lg:space-y-28 lg:py-28">
-        <div className="relative py-16 lg:py-20">
+        {/* <div className="relative py-16 lg:py-20">
           <BackgroundSection />
           <SectionSliderNewAuthors
             heading="Top elite authors"
             subHeading="Discover our elite writers"
             authors={authors.slice(0, 10)}
           />
-        </div>
+        </div> */}
 
         {/* SUBCRIBES */}
-        <SectionSubscribe2 />
+        {/* <SectionSubscribe2 /> */}
       </div>
     </ApplicationLayout>
   )

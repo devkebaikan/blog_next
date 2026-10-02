@@ -72,12 +72,12 @@ export function transformApiBlogToPost(item: ApiBlogItem) {
     },
     author: {
       id: 'author-admin',
-      name: item.creator || 'Admin Beramal',
+      name: item.creator || 'BeramalBersama',
       handle: slugify(item.creator || 'admin-beramal'),
       description: 'Penulis dan kontributor inspirasi kebaikan Beramalbersama.',
       avatar: {
-        src: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400&auto=format&fit=crop',
-        alt: item.creator || 'Admin Beramal',
+        src: '/images/logo/logo-short-color.png',
+        alt: item.creator || 'BeramalBersama',
         width: 100,
         height: 100,
       },
