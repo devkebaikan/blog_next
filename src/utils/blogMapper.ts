@@ -76,7 +76,7 @@ export function transformApiBlogToPost(item: ApiBlogItem) {
       handle: slugify(item.creator || 'admin-beramal'),
       description: 'Penulis dan kontributor inspirasi kebaikan Beramalbersama.',
       avatar: {
-        src: '/images/logo/logo-short-color.png',
+        src: '/images/logo/logo-circle.png',
         alt: item.creator || 'BeramalBersama',
         width: 100,
         height: 100,

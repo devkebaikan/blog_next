@@ -77,11 +77,11 @@ export async function getPostsDefault() {
       status: 'published',
       author: {
         id: 'author-1',
-        name: 'Sarah Wilson',
+        name: 'Beramalbersama',
         handle: 'sarah-wilson',
         avatar: {
           src: _demo_author_image_urls[0],
-          alt: 'Sarah Wilson',
+          alt: 'Beramalbersama',
           width: 1920,
           height: 1080,
         },
@@ -371,11 +371,11 @@ export async function getPostsAudio() {
       status: 'published',
       author: {
         id: 'author-2',
-        name: 'Sarah Wilson',
+        name: 'Beramalbersama',
         handle: 'sarah-wilson',
         avatar: {
           src: _demo_author_image_urls[7],
-          alt: 'Sarah Wilson',
+          alt: 'Beramalbersama',
           width: 1920,
           height: 1080,
         },
@@ -665,11 +665,11 @@ export async function getPostsAudio() {
       status: 'published',
       author: {
         id: 'author-9',
-        name: 'Sarah Wilson',
+        name: 'Beramalbersama',
         handle: 'sarah-wilson',
         avatar: {
           src: _demo_author_image_urls[4],
-          alt: 'Sarah Wilson',
+          alt: 'Beramalbersama',
           width: 1920,
           height: 1080,
         },

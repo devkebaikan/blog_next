@@ -13,22 +13,17 @@ interface Props {
 const socialsDemo = [
   {
     name: 'Facebook',
-    href: 'https://www.facebook.com/',
+    href: 'https://www.facebook.com/beramalbersama',
     icon: Facebook01Icon,
   },
   {
     name: 'Instagram',
-    href: 'https://www.instagram.com/example',
+    href: 'https://www.instagram.com/beramalbersama/',
     icon: InstagramIcon,
   },
   {
-    name: 'Twitter',
-    href: 'https://x.com/example',
-    icon: NewTwitterIcon,
-  },
-  {
     name: 'Youtube',
-    href: 'https://www.youtube.com/@example',
+    href: 'https://www.youtube.com/channel/UCdo2A0yaJ1p0zEKKpoTe7xA',
     icon: YoutubeIcon,
   },
 ]

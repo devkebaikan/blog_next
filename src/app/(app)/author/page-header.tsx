@@ -61,9 +61,9 @@ const PageHeader = ({ author, className }: { author: TAuthor; className?: string
                 <VerifyIcon iconClass="size-6 lg:size-7" />
               </div>
               <p className="text-sm/6 text-neutral-600 dark:text-neutral-400">{description}</p>
-              <Link href="#" className="flex items-center gap-x-2 text-xs text-neutral-500 dark:text-neutral-400">
+              <Link href="https://beramalbersama.com/home" className="flex items-center gap-x-2 text-xs text-neutral-500 dark:text-neutral-400">
                 <GlobeAltIcon className="size-4" />
-                <span className="font-medium text-neutral-700 dark:text-neutral-300">https://example.com/me</span>
+                <span className="font-medium text-neutral-700 dark:text-neutral-300">https://beramalbersama.com/</span>
               </Link>
               <SocialsList />
             </div>
