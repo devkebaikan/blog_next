@@ -13,9 +13,65 @@ export async function generateMetadata({ params }: { params: Promise<{ handle: s
       description: 'Post not found',
     }
   }
+
+  const rawImage =
+    (typeof post.featuredImage === 'string'
+      ? post.featuredImage
+      : post.featuredImage?.src) ||
+    post.galleryImgs?.[0] ||
+    ''
+
+  const siteUrl =
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    process.env.SITE_URL ||
+    'https://beramalbersama.com'
+
+  const imageUrl = rawImage
+    ? rawImage.startsWith('http')
+      ? rawImage
+      : `${siteUrl.replace(/\/$/, '')}${rawImage.startsWith('/') ? '' : '/'}${rawImage}`
+    : undefined
+
+  const postUrl = `${siteUrl.replace(/\/$/, '')}/post/${post.handle}`
+  const title = post.title
+
+  // Clean description from any HTML tags and limit length
+  const cleanDescription = (post.excerpt || post.content || post.title)
+    .replace(/<[^>]*>/g, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+  const description =
+    cleanDescription.length > 160 ? `${cleanDescription.slice(0, 157)}...` : cleanDescription
+
   return {
-    title: post.title,
-    description: post.excerpt,
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: postUrl,
+      siteName: 'Beramalbersama',
+      locale: 'id_ID',
+      type: 'article',
+      publishedTime: post.date,
+      authors: post.author?.name ? [post.author.name] : undefined,
+      images: imageUrl
+        ? [
+            {
+              url: imageUrl,
+              width: 1200,
+              height: 630,
+              alt: title,
+            },
+          ]
+        : undefined,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: imageUrl ? [imageUrl] : undefined,
+    },
   }
 }
 

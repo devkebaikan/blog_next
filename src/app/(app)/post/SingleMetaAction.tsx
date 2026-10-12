@@ -8,8 +8,10 @@ import { Button } from '@/shared/Button'
 import { Dialog, DialogActions, DialogBody, DialogTitle } from '@/shared/dialog'
 import { Dropdown, DropdownButton, DropdownItem, DropdownMenu } from '@/shared/dropdown'
 import {
+  CheckmarkCircle02Icon,
   ClipboardIcon,
   Comment01Icon,
+  CopyLinkIcon,
   Facebook01Icon,
   Flag03Icon,
   Mail01Icon,
@@ -17,10 +19,11 @@ import {
   NewTwitterIcon,
   Share03Icon,
   ViewOffSlashIcon,
+  WhatsappIcon,
 } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import clsx from 'clsx'
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 
 function ActionDropdown({ handle, title, author }: { handle: string; title: string; author: TPostDetail['author'] }) {
   const [isOpenDialogHideAuthor, setIsOpenDialogHideAuthor] = useState(false)
@@ -121,41 +124,120 @@ function ActionDropdown({ handle, title, author }: { handle: string; title: stri
 }
 
 function ShareDropdown({ handle }: { handle: string }) {
+  const [showToast, setShowToast] = useState(false)
+  const [currentUrl, setCurrentUrl] = useState('')
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setCurrentUrl(window.location.href)
+    }
+  }, [])
+
+  const handleCopyLink = () => {
+    const url = typeof window !== 'undefined' ? window.location.href : ''
+    if (!url) return
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard
+        .writeText(url)
+        .then(() => {
+          setShowToast(true)
+          setTimeout(() => setShowToast(false), 2500)
+        })
+        .catch(() => {
+          fallbackCopyText(url)
+        })
+    } else {
+      fallbackCopyText(url)
+    }
+  }
+
+  const fallbackCopyText = (text: string) => {
+    const textArea = document.createElement('textarea')
+    textArea.value = text
+    textArea.style.position = 'fixed'
+    textArea.style.opacity = '0'
+    document.body.appendChild(textArea)
+    textArea.focus()
+    textArea.select()
+    try {
+      document.execCommand('copy')
+      setShowToast(true)
+      setTimeout(() => setShowToast(false), 2500)
+    } catch (err) {
+      console.error('Failed to copy', err)
+    }
+    document.body.removeChild(textArea)
+  }
+
   const socialsShare = [
     {
+      name: 'Copy link',
+      icon: ClipboardIcon,
+      onClick: handleCopyLink,
+    },
+    {
+      name: 'WhatsApp',
+      href: currentUrl ? `https://api.whatsapp.com/send?text=${encodeURIComponent(currentUrl)}` : '#',
+      target: '_blank',
+      rel: 'noopener noreferrer',
+      icon: WhatsappIcon,
+    },
+    {
       name: 'Facebook',
-      href: '#',
+      href: currentUrl ? `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}` : '#',
+      target: '_blank',
+      rel: 'noopener noreferrer',
       icon: Facebook01Icon,
     },
     {
-      name: 'Email',
-      href: '#',
-      icon: Mail01Icon,
+      name: 'Twitter',
+      href: currentUrl ? `https://twitter.com/intent/tweet?url=${encodeURIComponent(currentUrl)}` : '#',
+      target: '_blank',
+      rel: 'noopener noreferrer',
+      icon: NewTwitterIcon,
     },
     {
-      name: 'Twitter',
-      href: '#',
-      icon: NewTwitterIcon,
+      name: 'Email',
+      href: currentUrl ? `mailto:?body=${encodeURIComponent(currentUrl)}` : '#',
+      icon: Mail01Icon,
     },
   ]
 
   return (
-    <Dropdown>
-      <DropdownButton
-        as="button"
-        className="flex size-8.5 items-center justify-center rounded-full bg-neutral-50 transition-colors duration-300 hover:bg-neutral-100 dark:bg-white/10 dark:hover:bg-white/20"
-      >
-        <HugeiconsIcon icon={Share03Icon} size={20} />
-      </DropdownButton>
-      <DropdownMenu>
-        {socialsShare.map((item, index) => (
-          <DropdownItem key={index} href={item.href}>
-            <HugeiconsIcon icon={item.icon} size={20} data-slot="icon" />
-            {item.name}
-          </DropdownItem>
-        ))}
-      </DropdownMenu>
-    </Dropdown>
+    <>
+      <Dropdown>
+        <DropdownButton
+          as="button"
+          className="flex size-8.5 items-center justify-center rounded-full bg-neutral-50 transition-colors duration-300 hover:bg-neutral-100 dark:bg-white/10 dark:hover:bg-white/20"
+        >
+          <HugeiconsIcon icon={Share03Icon} size={20} />
+        </DropdownButton>
+        <DropdownMenu>
+          {socialsShare.map((item) =>
+            item.href ? (
+              <DropdownItem key={item.name} href={item.href} target={item.target} rel={item.rel}>
+                <HugeiconsIcon icon={item.icon} size={20} data-slot="icon" />
+                {item.name}
+              </DropdownItem>
+            ) : (
+              <DropdownItem key={item.name} onClick={item.onClick}>
+                <HugeiconsIcon icon={item.icon} size={20} data-slot="icon" />
+                {item.name}
+              </DropdownItem>
+            )
+          )}
+        </DropdownMenu>
+      </Dropdown>
+
+      {/* TOAST COPIED */}
+      {showToast && (
+        <div className="fixed bottom-6 left-1/2 z-50 flex -translate-x-1/2 items-center gap-2 rounded-full bg-neutral-900 px-4 py-2.5 text-sm font-medium text-white shadow-2xl dark:bg-white dark:text-neutral-900">
+          <HugeiconsIcon icon={CheckmarkCircle02Icon} size={18} className="text-emerald-400 dark:text-emerald-600" />
+          <span>Link copied to clipboard!</span>
+        </div>
+      )}
+    </>
   )
 }
 
@@ -167,12 +249,12 @@ const SingleMetaAction: FC<Props> = ({ className, likeCount, liked, commentCount
   return (
     <div className={clsx('single-meta-action', className)}>
       <div className="flex flex-wrap items-center gap-x-2.5 gap-y-2">
-        <PostCardLikeBtn likeCount={likeCount} liked={liked} />
+        {/* <PostCardLikeBtn likeCount={likeCount} liked={liked} />
         <PostCardCommentBtn commentCount={commentCount} handle={handle} />
         <p className="font-light text-neutral-400 sm:mx-1">/</p>
-        <BookmarkBtn className="size-8.5!" />
+        <BookmarkBtn className="size-8.5!" /> */}
         <ShareDropdown handle={handle} />
-        <ActionDropdown handle={handle} title={title} author={author} />
+        {/* <ActionDropdown handle={handle} title={title} author={author} /> */}
       </div>
     </div>
   )

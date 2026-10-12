@@ -37,7 +37,7 @@ const Logo: React.FC<Props> = ({ className, size = '', variant = 'short-color', 
   
   return (
     <Link href="/" className={clsx('inline-block shrink-0 text-primary-600 p-2 dark:text-primary-500', className)}>
-      <Image src={getLogoImg()} className='object-contain h-full w-auto' alt="Logo" width={100} height={100} />
+      <Image src={getLogoImg()} className='object-contain h-full w-auto' alt="Logo" width={250} height={250} />
     </Link>
   )
 }
