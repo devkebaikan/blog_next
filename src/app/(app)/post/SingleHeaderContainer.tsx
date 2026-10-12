@@ -122,6 +122,7 @@ const HeaderStyle3 = ({ post, className }: Omit<Props, 'defaultStyle'>) => {
     readingTime,
     featuredImage,
   } = post
+  
   return (
     <header className={clsx('single-header-style-3 relative', className)}>
       <div className="absolute inset-x-0 top-0 h-[480px] bg-neutral-900 md:h-[600px] lg:h-[700px] xl:h-[95vh] dark:bg-black/30" />

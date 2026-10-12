@@ -26,11 +26,7 @@ export async function generateMetadata({ params }: { params: Promise<{ handle: s
     process.env.SITE_URL ||
     'https://beramalbersama.com'
 
-  const imageUrl = rawImage
-    ? rawImage.startsWith('http')
-      ? rawImage
-      : `${siteUrl.replace(/\/$/, '')}${rawImage.startsWith('/') ? '' : '/'}${rawImage}`
-    : undefined
+  const imageUrl = post?.image_url ?? ""
 
   const postUrl = `${siteUrl.replace(/\/$/, '')}/post/${post.handle}`
   const title = post.title
@@ -81,7 +77,7 @@ const Page = async ({ params }: { params: Promise<{ handle: string }> }) => {
   const comments = await getCommentsByPostId(post.id)
   const relatedPosts = (await getAllPosts()).slice(0, 6)
   const moreFromAuthorPosts = (await getAllPosts()).slice(1, 7)
-
+  
   return (
     <>
       <div className="single-post-page page-style-3">
